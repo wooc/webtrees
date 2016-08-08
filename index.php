@@ -30,6 +30,13 @@ use Fisharebest\Webtrees\Functions\FunctionsDb;
 define('WT_SCRIPT_NAME', 'index.php');
 require './includes/session.php';
 
+// Front controller
+if (Filter::get('route') !== null) {
+	require 'app/Http/routes.php';
+
+	return;
+}
+
 // The only option for action is "ajax"
 $action = Filter::get('action');
 

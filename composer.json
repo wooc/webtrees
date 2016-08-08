@@ -6,7 +6,10 @@
 	"autoload": {
 		"psr-4": {
 			"Fisharebest\\Webtrees\\": "app/"
-		}
+		},
+		"files": [
+			"app/helpers.php"
+		]
 	},
 	"require": {
 		"ezyang/htmlpurifier": "4.*",

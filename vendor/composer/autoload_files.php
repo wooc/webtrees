@@ -24,4 +24,5 @@ return array(
     '2cffec82183ee1cea088009cef9a6fc3' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
     'd242c324488a3873d00844a6f8dec437' => $vendorDir . '/fisharebest/php-polyfill/src/bootstrap.php',
     '2c102faa651ef8ea5874edb585946bce' => $vendorDir . '/swiftmailer/swiftmailer/lib/swift_required.php',
+    'cfa136062d76af496cfe7f61bc843def' => $baseDir . '/app/helpers.php',
 );

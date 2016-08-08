@@ -39,19 +39,20 @@ class Mail {
 	 * @param string $replyto_email
 	 * @param string $replyto_name
 	 * @param string $subject
-	 * @param string $message
+	 * @param string $body_html
+	 * @param string $body_text
 	 *
 	 * @return bool
 	 */
-	public static function send(Tree $tree, $to_email, $to_name, $replyto_email, $replyto_name, $subject, $message) {
+	public static function send(Tree $tree, $to_email, $to_name, $replyto_email, $replyto_name, $subject, $body_html, $body_text) {
 		try {
 		    $mail = Swift_Message::newInstance()
                 ->setSubject($subject)
                 ->setFrom(Site::getPreference('SMTP_FROM_NAME'), $tree->getPreference('title'))
                 ->setTo($to_email, $to_name)
                 ->setReplyTo($replyto_email, $replyto_name)
-                ->setBody($message, 'text/html')
-                ->addPart(Filter::unescapeHtml($message), 'text/plain');
+                ->setBody($body_html, 'text/html')
+                ->addPart($body_text, 'text/plain');
 		    
             Swift_Mailer::newInstance(self::transport())->send($mail);
 		} catch (Exception $ex) {
@@ -69,17 +70,19 @@ class Mail {
 	 * @param Tree   $tree
 	 * @param User   $user
 	 * @param string $subject
-	 * @param string $message
+	 * @param string $body_html
+	 * @param string $body_text
 	 *
 	 * @return bool
 	 */
-	public static function systemMessage(Tree $tree, User $user, $subject, $message) {
+	public static function systemMessage(Tree $tree, User $user, $subject, $body_html, $body_text = '') {
 		return self::send(
 			$tree,
 			$user->getEmail(), $user->getRealName(),
 			Site::getPreference('SMTP_FROM_NAME'), $tree->getPreference('title'),
 			$subject,
-			$message
+			$body_html,
+			$body_text
 		);
 	}
 

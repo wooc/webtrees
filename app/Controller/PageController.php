@@ -33,9 +33,25 @@ class PageController extends BaseController {
 
 	/** @var string <head><title> $page_title </title></head> */
 	private $page_title = WT_WEBTREES;
+	
+	/** @var string The content of the page */
+	private $page_content = '';
 
 	/** @var bool Is this a popup window? */
 	private $popup;
+
+	/**
+	 * Set the main content (excluding header/footer) of the page.
+	 *
+	 * @param string  $page_content
+	 *
+	 * @return $this
+	 */
+	public function setPageContent($page_content) {
+		$this->page_content = $page_content;
+
+		return $this;
+	}
 
 	/**
 	 * What should this page show in the browser’s title bar?
@@ -177,6 +193,10 @@ class PageController extends BaseController {
 			echo Theme::theme()->bodyHeader();
 			// We've displayed the header - display the footer automatically
 			register_shutdown_function(array($this, 'pageFooter'), $this->popup);
+		}
+		
+		if ($this->page_content !== '') {
+			echo $this->page_content;
 		}
 
 		return $this;

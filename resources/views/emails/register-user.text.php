@@ -13,15 +13,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Fisharebest\Webtrees;
+?>
+<?php echo translate('Hello %s…', $user->getRealName()) ?>
 
-define('WT_SCRIPT_NAME', 'logout.php');
-require './includes/session.php';
 
-if (Auth::id()) {
-	Log::addAuthenticationLog('Logout: ' . Auth::user()->getUserName() . '/' . Auth::user()->getRealName());
-	Auth::logout();
-	FlashMessages::addMessage(I18N::translate('You have signed out.'), 'info');
-}
+<?php echo translate('You (or someone claiming to be you) has requested an account at %1$s using the email address %2$s.', $tree->getTitle(), $user->getEmail()) ?>
 
-header('Location: ' . WT_BASE_URL);
+
+<?php echo translate('Follow this link to verify your email address.') ?>
+
+
+<?php echo $verify_url ?>&id=<?php echo rawurlencode($user->getUserId()) ?>&amp;code=<?php echo rawurlencode($user->getPreference('reg_hashcode')) ?>
+
+<?php echo translate('Username') ?> - <?php echo $user->getUserName() ?>
+
+<?php echo translate('Comments') ?> - <?php echo $user->getPreference('comment') ?>
+
+
+<?php echo translate('If you didn’t request an account, you can just delete this message.') ?>

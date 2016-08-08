@@ -25,6 +25,7 @@ class ComposerStaticInit88915787c0ca8762c9a45e08fa8b3022
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
         'd242c324488a3873d00844a6f8dec437' => __DIR__ . '/..' . '/fisharebest/php-polyfill/src/bootstrap.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
+        'cfa136062d76af496cfe7f61bc843def' => __DIR__ . '/../..' . '/app/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (

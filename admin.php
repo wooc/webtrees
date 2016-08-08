@@ -457,6 +457,9 @@ $old_files = array(
 	WT_ROOT . 'modules_v3/googlemap/images/transparent-left-small.png',
 	WT_ROOT . 'modules_v3/googlemap/images/transparent-right-large.png',
 	WT_ROOT . 'modules_v3/googlemap/images/transparent-right-small.png',
+	// Removed in 1.7.8
+	WT_ROOT . 'login.php',
+	WT_ROOT . 'logout.php',
 );
 
 // Delete old files (if we can).

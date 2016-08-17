@@ -20257,3 +20257,7 @@ msgstr ""
 #: app/GedcomCode/GedcomCodeTemp.php:379
 msgid "Vancouver, British Columbia, Canada"
 msgstr ""
+
+#, fuzzy
+msgid "send"
+msgstr "पठाउनुहोस्"

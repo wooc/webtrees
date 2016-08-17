@@ -20561,3 +20561,7 @@ msgstr "…"
 
 #~ msgid "over"
 #~ msgstr "více než"
+
+#, fuzzy
+msgid "send"
+msgstr "odeslat"

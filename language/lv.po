@@ -20293,3 +20293,7 @@ msgstr ""
 
 #~ msgid "Zoom="
 #~ msgstr "Palielinājums="
+
+#, fuzzy
+msgid "send"
+msgstr "sūtīt"

@@ -16,6 +16,7 @@
 namespace Fisharebest\Webtrees;
 
 use Fisharebest\Webtrees\Http\Controllers\LoginController;
+use Fisharebest\Webtrees\Http\Controllers\MessageController;
 
 switch (Filter::get('route')) {
 default:
@@ -68,6 +69,30 @@ case 'registration-page':
 case 'verify-email':
 	$controller = new LoginController;
 	$controller->verifyEmailAction();
+	break;
+
+////////////////////////////////////////////////////////////////////////////////
+// Routes for messaging.
+////////////////////////////////////////////////////////////////////////////////
+
+case 'broadcast':
+	$controller = new MessageController;
+	$controller->broadcast();
+	break;
+
+case 'broadcast-all':
+	$controller = new MessageController;
+	$controller->broadcastAll();
+	break;
+
+case 'broadcast-inactive':
+	$controller = new MessageController;
+	$controller->broadcastInactive();
+	break;
+
+case 'broadcast-unused':
+	$controller = new MessageController;
+	$controller->broadcastUnused();
 	break;
 }
 exit;

@@ -20505,3 +20505,7 @@ msgstr "…"
 
 #~ msgid "over"
 #~ msgstr "over"
+
+#, fuzzy
+msgid "send"
+msgstr "send"

@@ -20525,3 +20525,7 @@ msgstr "…"
 
 #~ msgid "over"
 #~ msgstr "felett"
+
+#, fuzzy
+msgid "send"
+msgstr "elküld"

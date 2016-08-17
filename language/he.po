@@ -20513,3 +20513,7 @@ msgstr "…"
 
 #~ msgid "over"
 #~ msgstr "מעל"
+
+#, fuzzy
+msgid "send"
+msgstr "שלח"

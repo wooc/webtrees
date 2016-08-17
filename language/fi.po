@@ -20509,3 +20509,7 @@ msgstr "…"
 
 #~ msgid "over"
 #~ msgstr "yli"
+
+#, fuzzy
+msgid "send"
+msgstr "lähetä"

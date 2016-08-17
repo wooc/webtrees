@@ -20512,3 +20512,7 @@ msgstr "…"
 
 #~ msgid "over"
 #~ msgstr "plus de"
+
+#, fuzzy
+msgid "send"
+msgstr "envoyer"

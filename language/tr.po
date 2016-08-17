@@ -20496,3 +20496,7 @@ msgstr "…"
 
 #~ msgid "over"
 #~ msgstr "üzerinde"
+
+#, fuzzy
+msgid "send"
+msgstr "gönder"

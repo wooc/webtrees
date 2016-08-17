@@ -20559,3 +20559,7 @@ msgstr "…"
 
 #~ msgid "over"
 #~ msgstr "ponad"
+
+#, fuzzy
+msgid "send"
+msgstr "wyślij"

@@ -20253,3 +20253,7 @@ msgstr ""
 
 #~ msgid "West Africa"
 #~ msgstr "Afrika Barat"
+
+#, fuzzy
+msgid "send"
+msgstr "kirim"

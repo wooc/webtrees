@@ -20673,3 +20673,7 @@ msgstr "…"
 
 #~ msgid "over"
 #~ msgstr "أكثر من"
+
+#, fuzzy
+msgid "send"
+msgstr "إرسال"

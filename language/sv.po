@@ -20516,3 +20516,7 @@ msgstr "…"
 
 #~ msgid "over"
 #~ msgstr "över"
+
+#, fuzzy
+msgid "send"
+msgstr "skicka"

@@ -257,7 +257,20 @@ class FamilyNavigatorModule extends AbstractModule implements ModuleSidebarInter
 			}
 		}
 		if (!$html) {
-			$html = sprintf(self::MSG, I18N::translate('none'));
+			//luk
+			$marr = array();
+			foreach ($person->getFacts() as $fact) {
+				if ($fact->getTag() == 'MARR') {
+					$marr[]=$fact->getValue();
+				}
+			}
+			if (!empty($marr)) {
+				foreach ($marr as $spouse) {
+					$html = sprintf("<div class='flyout4'>%s</div>", $spouse);
+				}
+			} else {
+				$html = sprintf(self::MSG, I18N::translate('none'));
+			}
 		}
 
 		return sprintf(self::TTL, I18N::translate('Family')) . $html;

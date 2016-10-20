@@ -550,6 +550,26 @@ class FunctionsPrintFacts {
 			}
 			$html .= '<div class="fact_ASSO">' . $asso . '</div>';
 		}
+		// luk Level 2 ASSO
+		preg_match_all('/\n2 _?ASSO @(.*)@((\n[3-9].*)*)/', $event->getGedcom(), $amatches_l, PREG_SET_ORDER);
+		foreach ($amatches_l as $amatch) {
+			if (!empty($amatch[1]) && !in_array($amatch, array_merge($amatches1, $amatches2))) {
+				if (preg_match('/\n3 RELA (.+)/', $amatch[2], $rmatch)) {
+					$rela=$rmatch[1];
+				} else {
+					$rela='';
+				}
+				if ($rela) {
+					$label=GedcomCodeRela::getValue($rela);
+				}
+				if (!$label) {
+					$label='?';
+				}
+				$asso = I18N::translate('<span class="label">%1$s:</span> <span class="field" dir="auto">%2$s</span>', $label, $amatch[1]);
+				$html .= '<div class="fact_ASSO">' . $asso . '</div>';
+			}
+		}
+		// luk
 
 		return $html;
 	}

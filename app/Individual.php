@@ -749,9 +749,15 @@ class Individual extends GedcomRecord {
 	 *
 	 * @return string
 	 */
-	public function getSexImage($size = 'small') {
-		return self::sexImage($this->getSex(), $size);
+	public function getSexImage($size = 'small', $no = true) {
+		if ($no) {
+			return;
+		}
+		else {
+			return self::sexImage($this->getSex(), $size);
+		}
 	}
+	//luk
 
 	/**
 	 * Generate a sex icon/image
@@ -1258,7 +1264,15 @@ class Individual extends GedcomRecord {
 	 * @return string
 	 */
 	public function formatListDetails() {
+		//PERSO Add Sosa icon
+        $perso='';
+		if (Auth::id()==$this->tree->getPreference('PERSO_PS_ROOT_INDI') && array_key_exists('perso_sosa', Module::getActiveModules())) {
+			$dindi = new WT_Perso_Individual($this);
+			$perso='&nbsp;'.WT_Perso_Functions_Print::formatSosaNumbers($dindi->getSosaNumbers(), 1);
+		}
+        //END PERSO
 		return
+			$perso.
 			$this->formatFirstMajorFact(WT_EVENTS_BIRT, 1) .
 			$this->formatFirstMajorFact(WT_EVENTS_DEAT, 1);
 	}

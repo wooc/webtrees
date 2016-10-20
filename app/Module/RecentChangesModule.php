@@ -336,7 +336,8 @@ class RecentChangesModule extends AbstractModule implements ModuleBlockInterface
 			$html .= '<tr><td>';
 			switch ($record::RECORD_TYPE) {
 			case 'INDI':
-				$icon = $record->getSexImage('small');
+				//luk
+				$icon = $record->getSexImage('small', false);
 				break;
 			case 'FAM':
 				$icon = '<i class="icon-button_family"></i>';

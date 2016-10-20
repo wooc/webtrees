@@ -255,7 +255,8 @@ class FunctionsPrint {
 			$family = current($families);
 			foreach ($family->getSpouses() as $parent) {
 				if ($parent->getBirthDate()->isOK()) {
-					$sex      = $parent->getSexImage();
+					//luk
+					$sex      = $parent->getSexImage('small', false);
 					$age      = Date::getAge($parent->getBirthDate(), $birth_date, 2);
 					$deatdate = $parent->getDeathDate();
 					switch ($parent->getSex()) {

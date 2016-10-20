@@ -183,6 +183,12 @@ if ($controller->record->canShow()) {
 			$controller->printSexRecord($fact);
 		}
 	}
+	//PERSO
+	if ($WT_TREE->getUserPreference(Auth::user(), 'gedcomid') == $WT_TREE->getPreference('PERSO_PS_ROOT_INDI') && Module::getModuleByName('perso_sosa')) {
+		$dcontroller = new WT_Perso_Controller_Individual($controller);
+		$dcontroller->print_extra_icons_header();
+	}
+	//END PERSO
 	echo '</h3>'; // close first name accordion header
 
 	// Display name details
@@ -193,6 +199,11 @@ if ($controller->record->canShow()) {
 	}
 
 	echo '</div>'; // close header_accordion1
+	//PERSO
+	if ($WT_TREE->getUserPreference(Auth::user(), 'gedcomid') == $WT_TREE->getPreference('PERSO_PS_ROOT_INDI') && Module::getModuleByName('perso_sosa')) {
+		$dcontroller->print_extensions_header();
+	}
+	//END PERSO
 }
 echo '</div>'; // close #indi_header
 // ===================================== main content tabs

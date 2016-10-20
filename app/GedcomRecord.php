@@ -730,7 +730,27 @@ class GedcomRecord {
 		if ($this->canShowName()) {
 			$tmp = $this->getAllNames();
 
-			return $tmp[$this->getPrimaryName()]['full'];
+			// return $tmp[$this->getPrimaryName()]['full'];
+			//luk
+			$count=count($tmp);
+			$married_surname='';
+			for ($i=0; $i<=$count; $i++) {
+				if (isset($tmp[$i]['full']) && $tmp[$i]['type']=='_MARNM') {
+					$married_surname=$tmp[$i]['surname'];
+				}
+			}
+			if ($married_surname=='@N.N.') {
+				$married_surname=I18N::translate('…');
+			}
+			if ($married_surname && $married_surname != $tmp[$this->getPrimaryName()]['surname']) {
+				if ($tmp[$this->getPrimaryName()]['surname']=='@N.N.') {
+					return str_replace(I18N::translate('…'), $married_surname, ($tmp[$this->getPrimaryName()]['full'])) . ' ' . I18N::translate('(nee&nbsp;%s)', I18N::translate('…'));
+				} else {
+					return str_replace($tmp[$this->getPrimaryName()]['surname'], $married_surname, strip_tags($tmp[$this->getPrimaryName()]['full'])) . ' ' . I18N::translate('(nee&nbsp;%s)', $tmp[$this->getPrimaryName()]['surname']);
+				}
+			} else {
+				return $tmp[$this->getPrimaryName()]['full'];
+			}
 		} else {
 			return I18N::translate('Private');
 		}
@@ -746,6 +766,17 @@ class GedcomRecord {
 		$tmp = $this->getAllNames();
 
 		return $tmp[$this->getPrimaryName()]['sort'];
+		//luk
+		if (isset($tmp[1]['sort']) && $tmp[1]['type']=='_MARNM') {
+			$name = strip_tags($tmp[$this->getPrimaryName()]['sort']);
+			$surname = substr($name, strRpos($name, ' '));
+			$givname = substr($name, 0, strRpos($name, ' '));
+			$m_name = strip_tags($tmp[1]['sort']);
+			$m_givname = substr($m_name, 0, strRpos($m_name, ' '));
+			return str_replace($m_givname, $givname, $m_name).I18N::translate('(nee&nbsp;%s)', trim($surname));
+		} else {
+			return $tmp[$this->getPrimaryName()]['sort'];
+		}
 	}
 
 	/**

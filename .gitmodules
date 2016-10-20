@@ -1,0 +1,60 @@
+[submodule "modules_v3/wooc_singlepage_pedigree"]
+	path = modules_v3/wooc_singlepage_pedigree
+	url = git://github.com/wooc/wooc_singlepage_pedigree.git
+[submodule "modules_v3/wooc_ancestors_table"]
+	path = modules_v3/wooc_ancestors_table
+	url = git://github.com/wooc/wooc_ancestors_table.git
+[submodule "modules_v3/wooc_mygallery"]
+	path = modules_v3/wooc_mygallery
+	url = git://github.com/wooc/wooc_mygallery.git
+[submodule "modules_v3/wooc_research"]
+	path = modules_v3/wooc_research
+	url = git://github.com/wooc/wooc_research.git
+[submodule "modules_v3/wooc_mapa_nazwisk"]
+	path = modules_v3/wooc_mapa_nazwisk
+	url = git://github.com/wooc/wooc_mapa_nazwisk.git
+[submodule "modules_v3/wooc_research_links"]
+	path = modules_v3/wooc_research_links
+	url = git://github.com/wooc/wooc_research_links.git
+[submodule "modules_v3/wooc_source_report"]
+	path = modules_v3/wooc_source_report
+	url = git://github.com/wooc/wooc_source_report.git
+[submodule "modules_v3/wooc_server_usage"]
+	path = modules_v3/wooc_server_usage
+	url = git://github.com/wooc/wooc_server_usage.git
+[submodule "modules_v3/wooc_sanity_check"]
+	path = modules_v3/wooc_sanity_check
+	url = git://github.com/wooc/wooc_sanity_check.git
+[submodule "modules_v3/wooc_next_id"]
+	path = modules_v3/wooc_next_id
+	url = git://github.com/wooc/wooc_next_id.git
+[submodule "modules_v3/wooc_menu"]
+	path = modules_v3/wooc_menu
+	url = git://github.com/wooc/wooc_menu.git
+[submodule "modules_v3/wooc_cousins"]
+	path = modules_v3/wooc_cousins
+	url = git://github.com/wooc/wooc_cousins.git
+[submodule "modules_v3/wooc_album"]
+	path = modules_v3/wooc_album
+	url = git://github.com/wooc/wooc_album.git
+[submodule "modules_v3/justlight_theme_options"]
+	path = modules_v3/justlight_theme_options
+	url = git://github.com/JustCarmen/justlight_theme_options.git
+[submodule "modules_v3/fancy_treeview"]
+	path = modules_v3/fancy_treeview
+	url = git://github.com/JustCarmen/fancy_treeview.git
+[submodule "modules_v3/fancy_privacy_list"]
+	path = modules_v3/fancy_privacy_list
+	url = git://github.com/JustCarmen/fancy_privacy_list.git
+[submodule "modules_v3/fancy_imagebar"]
+	path = modules_v3/fancy_imagebar
+	url = git://github.com/JustCarmen/fancy_imagebar.git
+[submodule "modules_v3/fancy_branches"]
+	path = modules_v3/fancy_branches
+	url = git://github.com/JustCarmen/fancy_branches.git
+[submodule "modules_v3/fancy_treeview_pdf"]
+	path = modules_v3/fancy_treeview_pdf
+	url = git://github.com/JustCarmen/fancy_treeview_pdf.git
+[submodule "themes/justlight"]
+	path = themes/justlight
+	url = git://github.com/JustCarmen/justlight.git

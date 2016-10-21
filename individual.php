@@ -185,7 +185,7 @@ if ($controller->record->canShow()) {
 	}
 	//PERSO
 	if ($WT_TREE->getUserPreference(Auth::user(), 'gedcomid') == $WT_TREE->getPreference('PERSO_PS_ROOT_INDI') && Module::getModuleByName('perso_sosa')) {
-		$dcontroller = new WT_Perso_Controller_Individual($controller);
+		$dcontroller = new \Wooc\WebtreesAddOns\Perso\Controller\PersoIndividualController($controller);
 		$dcontroller->print_extra_icons_header();
 	}
 	//END PERSO

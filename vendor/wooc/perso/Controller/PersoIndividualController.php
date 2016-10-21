@@ -9,6 +9,9 @@
  * $HeadURL: file:///mnt/atl-fs8-data1/svn/webtrees-geneajaubart/trunk/library/WT/Perso/Controller/Individual.php $
  */
 namespace Wooc\WebtreesAddOns\Perso\Controller;
+
+use Wooc\WebtreesAddOns\Perso\PersoIndividual;
+use Wooc\WebtreesAddOns\Perso\Hook;
 use Fisharebest\Webtrees\Controller\IndividualController;
 
 class PersoIndividualController {

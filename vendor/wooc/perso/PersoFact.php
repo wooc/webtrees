@@ -52,16 +52,11 @@ class PersoFact {
 				$citations = $this->fact->getCitations();
 				foreach($citations as $citation){
 					$isSourced=max($isSourced, 1);
-					if(preg_match('/3 _ACT (.*)/', $citation) ){
- 						$isSourced=max($isSourced, 2);
- 						preg_match_all("/4 DATE (.*)/", $citation, $datessource, PREG_SET_ORDER);
- 						foreach($datessource as $daterec){
- 							$datesource = new Date($daterec[1]);
- 							if(abs($datesource->julianDay() - $date->julianDay()) < 180){
- 								$isSourced = max($isSourced, 3); //If this level increases, do not forget to change the constant MAX_IS_SOURCED_LEVEL
- 							}
- 						}
- 					}
+					if(preg_match('/3 PAGE (.*)/', $citation)){
+                        $isSourced=max($isSourced, 2);
+                        preg_match("/3 OBJE (.*)/", $citation);
+                        $isSourced = max($isSourced, 3); //If this level increases, do not forget to change the constant MAX_IS_SOURCED_LEVEL
+                    }
 				}
 			}
 		}

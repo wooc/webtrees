@@ -114,11 +114,21 @@ class PersoGedcomRecord {
 	public function isSourced(){
 		if($this->_issourced != null) return $this->_issourced;
 		$this->_issourced=-1;
+		/*
 		$sourcesfacts = $this->gedcomrecord->getFacts('SOUR');
 		foreach($sourcesfacts as $sourcefact){
 			$this->_issourced=max($this->_issourced, 1);
 			if($sourcefact->getAttribute('_ACT')){
 				$this->_issourced=max($this->_issourced, 2);
+			}
+		}
+		*/
+		foreach($this->gedcomrecord->getFacts() as $fact){
+			if (preg_match('/(?:^1|\n\d) SOUR/', $fact->getGedcom())) {
+				$this->_issourced = max($this->_issourced, 1);
+				if (preg_match('/(?:^1|\n\d) PAGE/', $fact->getGedcom())){
+					$this->_issourced = max($this->_issourced, 2);
+				}
 			}
 		}
 		return $this->_issourced;
@@ -131,14 +141,14 @@ class PersoGedcomRecord {
 	 * @return int Level of sources
 	 */
 	public function isFactSourced($eventslist){
-		$isSourced=0;
+		$isSourced = 0;
 		$facts = $this->gedcomrecord->getFacts($eventslist);
 		foreach($facts as $fact){
-			if($isSourced<PersoFact::MAX_IS_SOURCED_LEVEL){
+			if($isSourced <= PersoFact::MAX_IS_SOURCED_LEVEL){
 				$dfact = new PersoFact($fact);
 				$tmpIsSourced = $dfact->isSourced();
 				if($tmpIsSourced != 0) {
-					if($isSourced==0) {
+					if($isSourced == 0) {
 						$isSourced =  $tmpIsSourced;
 					}
 					else{

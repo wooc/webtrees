@@ -1999,7 +1999,7 @@ class TCPDF {
 			mb_internal_encoding($this->internal_encoding);
 		}
 		// cleanup
-		$this->_destroy(true);
+		//$this->_destroy(true);
 	}
 
 	/**

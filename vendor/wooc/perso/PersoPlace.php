@@ -91,4 +91,39 @@ class PersoPlace {
 		return $html;
 		
 	}
+	
+	/**
+	 * Return HTML code for the place formatted as requested.
+	 * The format string should used %n with n to describe the level of division to be printed (in the order of the GEDCOM place).
+	 * For instance "%1 (%2)" will display "Subdivision (Town)".
+	 *
+	 * @param string $format Format for the place
+	 * @param bool $anchor Option to print a link to placelist
+	 * @return string HTML code for formatted place
+	 */
+	public function htmlFormattedName($format, $anchor = false){		
+		$html='';
+		
+		$levels = array_map('trim', explode(',', $this->_place->getGedcomName()));
+		$nbLevels = count($levels);
+		$displayPlace = $format;
+		preg_match_all('/%[^%]/', $displayPlace, $matches);
+		foreach ($matches[0] as $match2) {
+			$index = str_replace('%', '', $match2);
+			if(is_numeric($index) && $index >0 && $index <= $nbLevels){
+				$displayPlace = str_replace($match2, $levels[$index-1] , $displayPlace);
+			}
+			else{
+				$displayPlace = str_replace($match2, '' , $displayPlace);
+			}
+		}
+		if ($anchor && !Auth::isSearchEngine()) {
+			$html .='<a href="' . $this->_place->getURL() . '">' . $displayPlace . '</a>';
+		} else {
+			$html .= $displayPlace;
+		}
+		
+		return $html;
+		
+	}
 }

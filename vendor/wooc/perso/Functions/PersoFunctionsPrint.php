@@ -15,6 +15,8 @@ use Fisharebest\Webtrees\Fact;
 use Fisharebest\Webtrees\GedcomTag;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
+use Wooc\WebtreesAddOns\Perso\PersoIndividual;
+use Wooc\WebtreesAddOns\Perso\PersoPlace;
 
 class PersoFunctionsPrint {
 
@@ -53,6 +55,50 @@ class PersoFunctionsPrint {
 	}
 
 	/**
+	 * Returns HTML code to display a tag cloud from a list.
+	 * List must be a list of arrays (one for each item to display) containing the following parameters:
+	 * 		- "text" : text to display
+	 * 		- "count" : count of items
+	 * 		- "url"	: url to the item
+	 *
+	 * @param array $list Array of items to display in the cloud
+	 * @param bool $totals Display totals for an items
+	 * @return string Tag Cloud HTML Code
+	 */
+	public static function htmlListCloud($list, $totals) {
+		$minimum = PHP_INT_MAX;
+		$maximum = 1;
+		foreach ($list as $params) {
+			if(array_key_exists('count', $params)) {
+				$maximum = max($maximum, $params['count']);
+				$minimum = min($minimum, $params['count']);
+			}
+		}
+		$html = '';
+		foreach ($list as $params) {
+			$text = array_key_exists('text', $params) ? $params['text'] : '';
+			$count = array_key_exists('count', $params) ? $params['count'] : 0;
+			$url = array_key_exists('url', $params) ? $params['url'] : '';
+			
+			if ($maximum === $minimum) {			
+				// All items occur the same number of times
+					$size = 150.0;
+			} else {
+				$size = 75.0 + 125.0 * ($count - $minimum) / ($maximum - $minimum);
+			}
+			
+			$html .= '<a style="font-size:' . $size . '%" href="' . $url . '">';
+			if ($totals) {
+				$html .= I18N::translate('%1$s (%2$s)', '<span dir="auto">' . $text . '</span>', I18N::number($count));
+			} else {
+				$html .= $text;
+			}
+			$html .= '</a> ';
+		}
+		return '<div class="tag_cloud">' . $html . '</div>';
+	}
+
+	/**
 	 * Returns HTML code to include a place cloud
 	 *
 	 * @param array $places Array of places to display in the cloud
@@ -60,42 +106,18 @@ class PersoFunctionsPrint {
 	 * @return string Place Cloud HTML Code
 	 */
 	public static function getPlacesCloud($places, $totals) {
+		global $WT_TREE;
+		$items = array();
 
-		$cloud=new Zend_Tag_Cloud(
-			array(
-				'tagDecorator'=>array(
-					'decorator'=>'HtmlTag',
-					'options'=>array(
-						'htmlTags'=>array(),
-						'fontSizeUnit'=>'%',
-						'minFontSize'=>100,
-						'maxFontSize'=>180
-					)
-				),
-				'cloudDecorator'=>array(
-					'decorator'=>'HtmlCloud',
-					'options'=>array(
-						'htmlTags'=>array(
-							'div'=>array(
-								'class'=>'tag_cloud'
-							)
-						)
-					)
-				)
-			)
-		);
 		foreach ($places as $place=>$count) {
-			$dplace = WT_Perso_Place::getIntance($place, $WT_TREE->getTreeId());
-			$shortplace = $dplace->getFormattedName('%1 (%2)');
-			$cloud->appendTag(array(
-				'title'=>$totals ? I18N::translate('%1$s (%2$d)', $shortplace, $count) : $shortplace,
-				'weight'=>$count,
-				'params'=>array(
-					'url'=> $dplace->getDerivedPlace()->getURL()
-				)
-			));
+			$dplace = PersoPlace::getIntance($place, $WT_TREE);
+			$items[] = array(
+				'text' => $dplace->htmlFormattedName('%1 (%2)'),
+				'count' => $count,
+				'url' => $dplace->getDerivedPlace()->getURL()
+			);
 		}
-		return (string)$cloud;
+		return self::htmlListCloud($items, $totals);
 	}
 
 	/**
@@ -118,7 +140,7 @@ class PersoFunctionsPrint {
 			I18N::translate('Informations for individual %s', $individual->getXref()).
 				'">';
 			$html .= '<'.$tag.'>'.$individual->getFullName().'</'.$tag.'>&nbsp;('.$individual->getXref().')&nbsp;';
-			$html .= PersoFunctions_Print::formatSosaNumbers($dindi->getSosaNumbers(), 1, 'small');
+			$html .= PersoFunctionsPrint::formatSosaNumbers($dindi->getSosaNumbers(), 1, 'small');
 			$html .= '&nbsp;<span><small><em>'.$dindi->format_first_major_fact(WT_EVENTS_BIRT, 10).'</em></small></span>';
 			$html .= '&nbsp;<span><small><em>'.$dindi->format_first_major_fact(WT_EVENTS_DEAT, 10).'</em></small></span>';
 			$html .= '</a>';
@@ -171,7 +193,7 @@ class PersoFunctionsPrint {
 		if ($fact==null) return $html;
 		$place = $fact->getPlace();
 		if($place){
-			$dplace = new WT_Perso_Place($place);
+			$dplace = new PersoPlace($place);
 			$html .= $dplace->getFormattedName($format, $anchor);
 		}
 		return $html;

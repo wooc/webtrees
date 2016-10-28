@@ -14,7 +14,7 @@ namespace Wooc\WebtreesAddOns\Perso;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Fact;
 use Fisharebest\Webtrees\GedcomRecord;
-
+use Wooc\WebtreesAddOns\Perso\Functions\PersoFunctionsPrint;
 
 class PersoGedcomRecord {
 

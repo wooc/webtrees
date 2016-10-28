@@ -9,12 +9,15 @@
  * $HeadURL: file:///mnt/atl-fs8-data1/svn/webtrees-geneajaubart/trunk/library/WT/Perso/Functions/PatronymicLineage.php $
  */
 
-if (!defined('WT_WEBTREES')) {
-	header('HTTP/1.0 403 Forbidden');
-	exit;
-}
+namespace Wooc\WebtreesAddOns\Perso\Functions;
 
-class PersoFunctions_PatronymicLineage {
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Individual;
+use Fisharebest\Webtrees\Query\QueryName;
+use Wooc\WebtreesAddOns\Perso\PersoIndividual;
+use Wooc\WebtreesAddOns\Perso\Functions\PersoFunctionsPrint;
+
+class PatronymicLineage {
 
 	private static $_tabPlaces = null;
 	private static $_usedIndis = null;
@@ -26,10 +29,10 @@ class PersoFunctions_PatronymicLineage {
 	 * @param string $legend Legend to display at the top of the lineage
 	 * @param int $gedcomid Gedcom ID
 	 */
-	public static function printLineages($surname, $legend, $gedcomid) {
+	public static function printLineages($tree, $surname, $legend) {
 		global $_tabPlaces, $_usedIndis;
 
-		$indilist = WT_Query_Name::individuals(strtoupper($surname), null, null, false, false, $gedcomid);
+		$indilist = QueryName::individuals($tree, strtoupper($surname), null, null, false, false);
 
 		if(count($indilist)==0) {
 			echo '<p class="center"><span class="warning">',
@@ -79,7 +82,7 @@ class PersoFunctions_PatronymicLineage {
 						if(count($_tabPlaces)>0){
 							ksort($_tabPlaces);
 							echo '<table class="patrolin_places"><tr><td>';
-							echo PersoFunctions_Print::getPlacesCloud($_tabPlaces, true);
+							echo PersoFunctionsPrint::getPlacesCloud($_tabPlaces, true);
 							echo '</td></tr></table>';
 						}
 						$nbLineages+=1;
@@ -91,7 +94,7 @@ class PersoFunctions_PatronymicLineage {
 		echo '</td></tr>';
 
 		echo '<tr><td class="list_label">',
-		I18N::translate('%s lineages found', $nbLineages),
+		I18N::plural('%s lineage found', '%s lineages found', I18N::number($nbLineages), I18N::number($nbLineages)),
 			'</td></tr></table>';
 
 		echo  '</table>';
@@ -107,7 +110,7 @@ class PersoFunctions_PatronymicLineage {
 	 * 
 	 * @param WT_Individual $indi_root Root individual to start the lineage from
 	 */
-	private static function printIndiLineage(WT_Individual $indi_root){
+	private static function printIndiLineage(Individual $indi_root){
 		global $_usedIndis, $_tabPlaces;
 
 		if($indi_root){
@@ -124,10 +127,10 @@ class PersoFunctions_PatronymicLineage {
 				//Separate the way to display the individual depending if this is its first marriage or not
 					echo '<li>';
 					if($numSpouseFamily<2){
-						echo PersoFunctions_Print::getIndividualForList($indi_root);
+						echo PersoFunctionsPrint::getIndividualForList($indi_root);
 					}
 					else{
-						echo PersoFunctions_Print::getIndividualForList($indi_root, false);
+						echo PersoFunctionsPrint::getIndividualForList($indi_root, false);
 					}
 					//Get individual's spouse
 					$spouse=$fam->getSpouse($indi_root);
@@ -141,7 +144,7 @@ class PersoFunctions_PatronymicLineage {
 							$marryear = $fam->getMarriageYear();
 						}
 						echo '<span class="details1" title="'.$marrdate.'"><i class="icon-rings"></i>'.$marryear.'</span></a>&nbsp;';
-						echo PersoFunctions_Print::getIndividualForList($spouse);
+						echo PersoFunctionsPrint::getIndividualForList($spouse);
 					}
 					// Get the children to print
 					$children=$fam->getChildren();
@@ -187,7 +190,7 @@ class PersoFunctions_PatronymicLineage {
 							//Print the natural children of the mother, with a reference to the relevant lineage
 							if($child_surname && $child_surname!=$father_surname && $mother_surname && $child_surname==$mother_surname){
 								echo '<ul><li>';
-								echo PersoFunctions_Print::getIndividualForList($child);
+								echo PersoFunctionsPrint::getIndividualForList($child);
 								echo '&nbsp;<a href="module.php?mod=perso_patronymiclineage&mod_action=patronymiclineage&surname='.$child_surname.'&ged='.$WT_TREE->getTreeId().'">('.I18N::translate('Go to %s lineages', $child_surname).')</a></li></ul>';
 							}
 							//Print the children's lineage
@@ -204,7 +207,7 @@ class PersoFunctions_PatronymicLineage {
 			//If no family, juste write the individual
 			else{
 				echo '<li>';
-				echo PersoFunctions_Print::getIndividualForList($indi_root);
+				echo PersoFunctionsPrint::getIndividualForList($indi_root);
 				echo '</li>';
 			}
 			echo '</ul>';
@@ -238,7 +241,7 @@ class PersoFunctions_PatronymicLineage {
 	 * 
 	 * @param WT_Individual $individual Root Individual, or null, if already used.
 	 */
-	private static function getLineageRootIndividual(WT_Individual $individual) {
+	private static function getLineageRootIndividual(Individual $individual) {
 		global $_usedIndis;
 		
 		$is_first=false;

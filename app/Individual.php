@@ -1267,8 +1267,8 @@ class Individual extends GedcomRecord {
 		//PERSO Add Sosa icon
         $perso='';
 		if (Auth::id()==$this->tree->getPreference('PERSO_PS_ROOT_INDI') && array_key_exists('perso_sosa', Module::getActiveModules())) {
-			$dindi = new WT_Perso_Individual($this);
-			$perso='&nbsp;'.WT_Perso_Functions_Print::formatSosaNumbers($dindi->getSosaNumbers(), 1);
+			$dindi = new PersoIndividual($this);
+			$perso='&nbsp;'.PersoFunctionsPrint::formatSosaNumbers($dindi->getSosaNumbers(), 1);
 		}
         //END PERSO
 		return

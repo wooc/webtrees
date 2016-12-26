@@ -390,7 +390,7 @@ class FunctionsPrintFacts {
 				// They are only shown when editing.
 				break;
 			case 'EVEN': // 0 SOUR / 1 DATA / 2 EVEN / 3 DATE / 3 PLAC
-				$events = array();
+				$events = [];
 				foreach (preg_split('/ *, */', $match[2]) as $event) {
 					$events[] = GedcomTag::getLabel($event);
 				}
@@ -499,7 +499,7 @@ class FunctionsPrintFacts {
 		// To whom is this record an assocate?
 		if ($parent instanceof Individual) {
 			// On an individual page, we just show links to the person
-			$associates = array($parent);
+			$associates = [$parent];
 		} elseif ($parent instanceof Family) {
 			// On a family page, we show links to both spouses
 			$associates = $parent->getSpouses();
@@ -525,7 +525,7 @@ class FunctionsPrintFacts {
 					$label = GedcomTag::getLabel('ASSO', $person);
 				}
 
-				$values = array('<a href="' . $person->getHtmlUrl() . '">' . $person->getFullName() . '</a>');
+				$values = ['<a href="' . $person->getHtmlUrl() . '">' . $person->getFullName() . '</a>'];
 				foreach ($associates as $associate) {
 					$relationship_name = Functions::getAssociateRelationshipName($associate, $person);
 					if (!$relationship_name) {
@@ -628,7 +628,7 @@ class FunctionsPrintFacts {
 			$source = Source::getInstance($sid, $WT_TREE);
 			if ($source) {
 				if ($source->canShow()) {
-					$spos1 = strpos($factrec, "$level SOUR @" . $sid . "@", $spos2);
+					$spos1 = strpos($factrec, "$level SOUR @" . $sid . '@', $spos2);
 					$spos2 = strpos($factrec, "\n$level", $spos1);
 					if (!$spos2) {
 						$spos2 = strlen($factrec);
@@ -710,14 +710,14 @@ class FunctionsPrintFacts {
 					// NOTE: echo the notes of the media
 					echo '<p>';
 					echo FunctionsPrint::printFactNotes($media->getGedcom(), 1);
-					$ttype = preg_match("/" . ($nlevel + 1) . " TYPE (.*)/", $media->getGedcom(), $match);
+					$ttype = preg_match('/' . ($nlevel + 1) . ' TYPE (.*)/', $media->getGedcom(), $match);
 					if ($ttype > 0) {
 						$mediaType = GedcomTag::getFileFormTypeValue($match[1]);
 						echo '<p class="label">', I18N::translate('Type'), ': </span> <span class="field">', $mediaType, '</p>';
 					}
 					echo '</p>';
 					//-- print spouse name for marriage events
-					$ct = preg_match("/WT_SPOUSE: (.*)/", $factrec, $match);
+					$ct = preg_match('/WT_SPOUSE: (.*)/', $factrec, $match);
 					if ($ct > 0) {
 						$spouse = Individual::getInstance($match[1], $media->getTree());
 						if ($spouse) {
@@ -725,13 +725,13 @@ class FunctionsPrintFacts {
 							echo $spouse->getFullName();
 							echo '</a>';
 						}
-						$ct = preg_match("/WT_FAMILY_ID: (.*)/", $factrec, $match);
+						$ct = preg_match('/WT_FAMILY_ID: (.*)/', $factrec, $match);
 						if ($ct > 0) {
 							$famid  = trim($match[1]);
 							$family = Family::getInstance($famid, $spouse->getTree());
 							if ($family) {
 								if ($spouse) {
-									echo " - ";
+									echo ' - ';
 								}
 								echo '<a href="', $family->getHtmlUrl(), '">', I18N::translate('View this family'), '</a>';
 							}
@@ -798,11 +798,11 @@ class FunctionsPrintFacts {
 				}
 				echo ' ', $styleadd, ' width20">';
 				$factlines = explode("\n", $factrec); // 1 BIRT Y\n2 SOUR ...
-				$factwords = explode(" ", $factlines[0]); // 1 BIRT Y
+				$factwords = explode(' ', $factlines[0]); // 1 BIRT Y
 				$factname  = $factwords[1]; // BIRT
 				if ($factname == 'EVEN' || $factname == 'FACT') {
 					// Add ' EVEN' to provide sensible output for an event with an empty TYPE record
-					$ct = preg_match("/2 TYPE (.*)/", $factrec, $ematch);
+					$ct = preg_match('/2 TYPE (.*)/', $factrec, $ematch);
 					if ($ct > 0) {
 						$factname = trim($ematch[1]);
 						echo $factname;
@@ -822,10 +822,10 @@ class FunctionsPrintFacts {
 						// Inline sources can't be edited. Attempting to save one will convert it
 						// into a link, and delete it.
 						// e.g. "1 SOUR my source" becomes "1 SOUR @my source@" which does not exist.
-						echo "<div class=\"editlink\"><a class=\"editicon\" onclick=\"return edit_record('$pid', '$fact_id');\" href=\"#\" title=\"" . I18N::translate('Edit') . "\"><span class=\"link_text\">" . I18N::translate('Edit') . "</span></a></div>";
+						echo "<div class=\"editlink\"><a class=\"editicon\" onclick=\"return edit_record('$pid', '$fact_id');\" href=\"#\" title=\"" . I18N::translate('Edit') . '"><span class="link_text">' . I18N::translate('Edit') . '</span></a></div>';
 						echo '<div class="copylink"><a class="copyicon" href="#" onclick="return copy_fact(\'', $pid, '\', \'', $fact_id, '\');" title="' . I18N::translate('Copy') . '"><span class="link_text">' . I18N::translate('Copy') . '</span></a></div>';
 					}
-					echo "<div class=\"deletelink\"><a class=\"deleteicon\" onclick=\"return delete_fact('" . I18N::translate('Are you sure you want to delete this fact?') . "', '$pid', '$fact_id');\" href=\"#\" title=\"" . I18N::translate('Delete') . "\"><span class=\"link_text\">" . I18N::translate('Delete') . "</span></a></div>";
+					echo "<div class=\"deletelink\"><a class=\"deleteicon\" onclick=\"return delete_fact('" . I18N::translate('Are you sure you want to delete this fact?') . "', '$pid', '$fact_id');\" href=\"#\" title=\"" . I18N::translate('Delete') . '"><span class="link_text">' . I18N::translate('Delete') . '</span></a></div>';
 					echo '</div>';
 				} else {
 					echo GedcomTag::getLabel($factname, $parent);
@@ -868,7 +868,7 @@ class FunctionsPrintFacts {
 					$cs = preg_match("/$nlevel EVEN (.*)/", $srec, $cmatch);
 					if ($cs > 0) {
 						echo '<br><span class="label">', GedcomTag::getLabel('EVEN'), ' </span><span class="field">', $cmatch[1], '</span>';
-						$cs = preg_match("/" . ($nlevel + 1) . " ROLE (.*)/", $srec, $cmatch);
+						$cs = preg_match('/' . ($nlevel + 1) . ' ROLE (.*)/', $srec, $cmatch);
 						if ($cs > 0) {
 							echo '<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="label">', GedcomTag::getLabel('ROLE'), ' </span><span class="field">', $cmatch[1], '</span>';
 						}
@@ -950,15 +950,15 @@ class FunctionsPrintFacts {
 	 */
 	public static function getSourceStructure($srec) {
 		// Set up the output array
-		$textSOUR = array(
+		$textSOUR = [
 			'PAGE' => '',
 			'EVEN' => '',
 			'ROLE' => '',
 			'DATA' => '',
 			'DATE' => '',
-			'TEXT' => array(),
+			'TEXT' => [],
 			'QUAY' => '',
-		);
+		];
 
 		if ($srec) {
 			$subrecords = explode("\n", $srec);
@@ -1041,9 +1041,9 @@ class FunctionsPrintFacts {
 					}
 					echo '</a>';
 					echo '<div class="editfacts">';
-					echo "<div class=\"editlink\"><a class=\"editicon\" onclick=\"return edit_record('$pid', '$fact_id');\" href=\"#\" title=\"" . I18N::translate('Edit') . "\"><span class=\"link_text\">" . I18N::translate('Edit') . "</span></a></div>";
+					echo "<div class=\"editlink\"><a class=\"editicon\" onclick=\"return edit_record('$pid', '$fact_id');\" href=\"#\" title=\"" . I18N::translate('Edit') . '"><span class="link_text">' . I18N::translate('Edit') . '</span></a></div>';
 					echo '<div class="copylink"><a class="copyicon" href="#" onclick="return copy_fact(\'', $pid, '\', \'', $fact_id, '\');" title="' . I18N::translate('Copy') . '"><span class="link_text">' . I18N::translate('Copy') . '</span></a></div>';
-					echo "<div class=\"deletelink\"><a class=\"deleteicon\" onclick=\"return delete_fact('" . I18N::translate('Are you sure you want to delete this fact?') . "', '$pid', '$fact_id');\" href=\"#\" title=\"" . I18N::translate('Delete') . "\"><span class=\"link_text\">" . I18N::translate('Delete') . "</span></a></div>";
+					echo "<div class=\"deletelink\"><a class=\"deleteicon\" onclick=\"return delete_fact('" . I18N::translate('Are you sure you want to delete this fact?') . "', '$pid', '$fact_id');\" href=\"#\" title=\"" . I18N::translate('Delete') . '"><span class="link_text">' . I18N::translate('Delete') . '</span></a></div>';
 					if ($note) {
 						echo '<a class="icon-note" href="', $note->getHtmlUrl(), '" title="' . I18N::translate('View') . '"><span class="link_text">' . I18N::translate('View') . '</span></a>';
 					}
@@ -1061,12 +1061,12 @@ class FunctionsPrintFacts {
 					}
 				}
 				$factlines = explode("\n", $factrec); // 1 BIRT Y\n2 NOTE ...
-				$factwords = explode(" ", $factlines[0]); // 1 BIRT Y
+				$factwords = explode(' ', $factlines[0]); // 1 BIRT Y
 				$factname  = $factwords[1]; // BIRT
 				$parent    = GedcomRecord::getInstance($pid, $fact->getParent()->getTree());
 				if ($factname == 'EVEN' || $factname == 'FACT') {
 					// Add ' EVEN' to provide sensible output for an event with an empty TYPE record
-					$ct = preg_match("/2 TYPE (.*)/", $factrec, $ematch);
+					$ct = preg_match('/2 TYPE (.*)/', $factrec, $ematch);
 					if ($ct > 0) {
 						$factname = trim($ematch[1]);
 						echo $factname;
@@ -1174,11 +1174,11 @@ class FunctionsPrintFacts {
 				echo ' ', $styleadd, ' width20">';
 				preg_match("/^\d (\w*)/", $factrec, $factname);
 				$factlines = explode("\n", $factrec); // 1 BIRT Y\n2 SOUR ...
-				$factwords = explode(" ", $factlines[0]); // 1 BIRT Y
+				$factwords = explode(' ', $factlines[0]); // 1 BIRT Y
 				$factname  = $factwords[1]; // BIRT
 				if ($factname == 'EVEN' || $factname == 'FACT') {
 					// Add ' EVEN' to provide sensible output for an event with an empty TYPE record
-					$ct = preg_match("/2 TYPE (.*)/", $factrec, $ematch);
+					$ct = preg_match('/2 TYPE (.*)/', $factrec, $ematch);
 					if ($ct > 0) {
 						$factname = $ematch[1];
 						echo $factname;

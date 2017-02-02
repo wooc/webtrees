@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: webtrees 1.0\n"
 "Report-Msgid-Bugs-To: i18n@webtrees.net\n"
 "POT-Creation-Date: 2016-12-24 09:00+0000\n"
-"PO-Revision-Date: 2016-12-25 14:18+0000\n"
-"Last-Translator: Martin Pannier <der@bauschaffen.de>\n"
+"PO-Revision-Date: 2017-01-08 20:03+0000\n"
+"Last-Translator: Andreas Rauhut <andreas@rauhut.eu>\n"
 "Language-Team: German <https://translate.webtrees.net/projects/webtrees/webtrees/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.8\n"
+"X-Generator: Weblate 2.10\n"
 
 #: modules_v3/ahnentafel_report/report.xml:160
 #: modules_v3/ahnentafel_report/report.xml:188
@@ -1097,7 +1097,7 @@ msgstr "ALPHABET_lower=aäbcdefghijklmnoöpqrsßtuüvwxyz"
 
 #: app/I18N.php:439
 msgid "ALPHABET_upper=ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-msgstr "ALPHABET_upper=AÄBCDEFGHIJKLMNOÖPQRSßTUÜVWXYZ"
+msgstr "ALPHABET_upper=AÄBCDEFGHIJKLMNOÖPQRSẞßTUÜVWXYZ"
 
 #. I18N: https://en.wikipedia.org/wiki/API_key
 #: app/Module/GoogleMapsModule.php:307
@@ -11469,6 +11469,17 @@ msgstr "Religiöse Institution"
 msgid "Religious marriage"
 msgstr "Kirchliche Trauung"
 
+msgid "Religious name"
+msgstr "Kirchlicher Name"
+
+msgctxt "FEMALE"
+msgid "Religious name"
+msgstr "Kirchlicher Name"
+
+msgctxt "MALE"
+msgid "Religious name"
+msgstr "Kirchlicher Name"
+
 #: app/Module/ReviewChangesModule.php:189
 msgid "Reminder email frequency (days)"
 msgstr "Häufigkeit der Erinnerungs E-Mail (Tage)"
@@ -16649,17 +16660,17 @@ msgstr "Schwiegertochter"
 #: app/Functions/Functions.php:1360
 msgctxt "son’s wife’s father"
 msgid "daughter-in-law’s father"
-msgstr "Schwiegertochters Vater"
+msgstr "Vater der Schwiegertochter"
 
 #: app/Functions/Functions.php:1362
 msgctxt "son’s wife’s mother"
 msgid "daughter-in-law’s mother"
-msgstr "Schwiegertochters Mutter"
+msgstr "Mutter der Schwiegertochter"
 
 #: app/Functions/Functions.php:1364
 msgctxt "son’s wife’s parent"
 msgid "daughter-in-law’s parent"
-msgstr "Schwiegertochters Vater/Mutter"
+msgstr "Eltern der Schwiegertochter"
 
 #: app/Stats.php:2911
 msgid "death"
@@ -19615,17 +19626,17 @@ msgstr "Schwiegersohn"
 #: app/Functions/Functions.php:1072
 msgctxt "daughter’s husband’s father"
 msgid "son-in-law’s father"
-msgstr "Schwiegersohns Vater"
+msgstr "Vater des Schwiegersohns"
 
 #: app/Functions/Functions.php:1074
 msgctxt "daughter’s husband’s mother"
 msgid "son-in-law’s mother"
-msgstr "Schwiegersohns Mutter"
+msgstr "Mutter des Schwiegersohns"
 
 #: app/Functions/Functions.php:1076
 msgctxt "daughter’s husband’s parent"
 msgid "son-in-law’s parent"
-msgstr "Schwiegersohns Vater/Mutter"
+msgstr "Eltern des Schwiegersohns"
 
 #: app/Functions/Functions.php:822
 msgctxt "child’s spouse"

@@ -84,7 +84,7 @@ class FunctionsPrintFacts {
 			return;
 		default:
 			// Hide unrecognized/custom tags?
-			if ($fact->getParent()->getTree()->getPreference('HIDE_GEDCOM_ERRORS') && !GedcomTag::isTag($fact->getTag())) {
+			if ($fact->getParent()->getTree()->getPreference('HIDE_GEDCOM_ERRORS') === '0' && !GedcomTag::isTag($fact->getTag())) {
 				return;
 			}
 			break;
@@ -173,33 +173,33 @@ class FunctionsPrintFacts {
 			?>
 			<a
 				href="#"
-				title="<?php echo I18N::translate('Edit'); ?>"
-				onclick="return edit_record('<?php echo $parent->getXref(); ?>', '<?php echo $fact->getFactId(); ?>');"
-				><?php echo $label; ?></a>
+				title="<?= I18N::translate('Edit') ?>"
+				onclick="return edit_record('<?= $parent->getXref() ?>', '<?= $fact->getFactId() ?>');"
+				><?= $label ?></a>
 			<div class="editfacts">
 				<div class="editlink">
 					<a
 						href="#"
-						title="<?php echo I18N::translate('Edit'); ?>"
+						title="<?= I18N::translate('Edit') ?>"
 						class="editicon"
-						onclick="return edit_record('<?php echo $parent->getXref(); ?>', '<?php echo $fact->getFactId(); ?>');"
-						><span class="link_text"><?php echo I18N::translate('Edit'); ?></span></a>
+						onclick="return edit_record('<?= $parent->getXref() ?>', '<?= $fact->getFactId() ?>');"
+						><span class="link_text"><?= I18N::translate('Edit') ?></span></a>
 				</div>
 				<div class="copylink">
 					<a
 						href="#"
-						title="<?php echo I18N::translate('Copy'); ?>"
+						title="<?= I18N::translate('Copy') ?>"
 						class="copyicon"
-						onclick="return copy_fact('<?php echo $parent->getXref(); ?>', '<?php echo $fact->getFactId(); ?>');"
-						><span class="link_text"><?php echo I18N::translate('Copy'); ?></span></a>
+						onclick="return copy_fact('<?= $parent->getXref() ?>', '<?= $fact->getFactId() ?>');"
+						><span class="link_text"><?= I18N::translate('Copy') ?></span></a>
 				</div>
 				<div class="deletelink">
 					<a
 						href="#"
-						title="<?php echo I18N::translate('Delete'); ?>"
+						title="<?= I18N::translate('Delete') ?>"
 						class="deleteicon"
-						onclick="return delete_fact('<?php echo I18N::translate('Are you sure you want to delete this fact?'); ?>', '<?php echo $parent->getXref(); ?>', '<?php echo $fact->getFactId(); ?>');"
-						><span class="link_text"><?php echo I18N::translate('Delete'); ?></span></a>
+						onclick="return delete_fact('<?= I18N::translate('Are you sure you want to delete this fact?') ?>', '<?= $parent->getXref() ?>', '<?= $fact->getFactId() ?>');"
+						><span class="link_text"><?= I18N::translate('Delete') ?></span></a>
 				</div>
 			</div>
 		<?php
@@ -463,7 +463,7 @@ class FunctionsPrintFacts {
 				echo GedcomTag::getLabelValue($fact->getTag() . ':' . $match[1], $link);
 				break;
 			default:
-				if (!$fact->getParent()->getTree()->getPreference('HIDE_GEDCOM_ERRORS') || GedcomTag::isTag($match[1])) {
+				if ($fact->getParent()->getTree()->getPreference('HIDE_GEDCOM_ERRORS') === '1' || GedcomTag::isTag($match[1])) {
 					if (preg_match('/^@(' . WT_REGEX_XREF . ')@$/', $match[2], $xmatch)) {
 						// Links
 						$linked_record = GedcomRecord::getInstance($xmatch[1], $fact->getParent()->getTree());
@@ -742,7 +742,7 @@ class FunctionsPrintFacts {
 					echo '</div>'; //close div "media-display-title"
 					echo '</div>'; //close div "media-display"
 				}
-			} elseif (!$WT_TREE->getPreference('HIDE_GEDCOM_ERRORS')) {
+			} elseif ($WT_TREE->getPreference('HIDE_GEDCOM_ERRORS') === '1') {
 				echo '<p class="ui-state-error">', $media_id, '</p>';
 			}
 			$objectNum++;

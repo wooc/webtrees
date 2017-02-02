@@ -13,6 +13,7 @@ namespace Wooc\WebtreesAddOns\Perso\Functions;
 use Fisharebest\Webtrees\Database;
 use Fisharebest\Webtrees\Filter;
 use Fisharebest\Webtrees\I18N;
+use Wooc\WebtreesAddOns\Perso\Controller\PersoPlainAjaxController;
 
 class PersoFunctionsEdit {
 		
@@ -27,7 +28,7 @@ class PersoFunctionsEdit {
 	 */
 	static public function edit_module_field_inline($name, $value, $controller = null, $savingmodule = 'perso_config'){
 		$html='<span class="editable" id="' . $name . '">' . Filter::escapeHtml($value) . '</span>';
-		$js='jQuery("#' . $name . '").editable("' . __DIR__ . 'module.php?mod='.$savingmodule.'&mod_action=admin_update_setting", {submitdata: {csrf: WT_CSRF_TOKEN}, submit:"&nbsp;&nbsp;' . I18N::translate('OK') . '&nbsp;&nbsp;", style:"inherit", placeholder: "'.I18N::translate('click to edit').'"});';
+		$js='jQuery("#' . $name . '").editable("' . WT_BASE_URL . 'module.php?mod='.$savingmodule.'&mod_action=admin_update_setting", {submitdata: {csrf: WT_CSRF_TOKEN}, submit:"&nbsp;&nbsp;' . I18N::translate('OK') . '&nbsp;&nbsp;", style:"inherit", placeholder: "'.I18N::translate('click to edit').'"});';
 
 		if ($controller) {
 			$controller->addInlineJavascript($js);
@@ -49,7 +50,7 @@ class PersoFunctionsEdit {
 	 */
 	static public function edit_module_longfield_inline($name, $value, $controller = null, $savingmodule = 'perso_config'){
 		$html='<span class="editable" id="' . $name . '">' . Filter::escapeHtml($value) . '</span>';
-		$js='jQuery("#' . $name . '").editable("' . WT_SERVER_NAME . WT_SCRIPT_PATH . 'module.php?mod='.$savingmodule.'&mod_action=admin_update_setting", {type:"textarea", submitdata: {csrf: WT_CSRF_TOKEN}, submit:"&nbsp;&nbsp;' . I18N::translate('OK') . '&nbsp;&nbsp;", style:"inherit", rows: 5, placeholder: "'.I18N::translate('click to edit').'"});';
+		$js='jQuery("#' . $name . '").editable("' . WT_BASE_URL . 'module.php?mod='.$savingmodule.'&mod_action=admin_update_setting", {type:"textarea", submitdata: {csrf: WT_CSRF_TOKEN}, submit:"&nbsp;&nbsp;' . I18N::translate('OK') . '&nbsp;&nbsp;", style:"inherit", rows: 5, placeholder: "'.I18N::translate('click to edit').'"});';
 		
 		if ($controller) {
 			$controller->addInlineJavascript($js);
@@ -86,7 +87,7 @@ class PersoFunctionsEdit {
 		$html='<span class="editable" id="' . $name . '">' .
 			(array_key_exists($selected, $values) ? $values[$selected] : '').
 			'</span>';
-		$js='jQuery("#' . $name . '").editable("' . WT_SERVER_NAME . WT_SCRIPT_PATH . 'module.php?mod='.$savingmodule.'&mod_action=admin_update_setting",
+		$js='jQuery("#' . $name . '").editable("' . WT_ROOT . 'module.php?mod='.$savingmodule.'&mod_action=admin_update_setting",
 				{
 					type:"select", data:' . json_encode($values) . ', 
 					submitdata: {csrf: WT_CSRF_TOKEN},
@@ -149,17 +150,17 @@ class PersoFunctionsEdit {
 	 * @param string $value New setting value
 	 */
 	static public function ok($value) {
-		$controller = new WT_Perso_Controller_PlainAjax();		
-		$controller->pageHeader();
-		echo Filter::escapeHtml($value);
-		exit;
+		//$controller = new PersoPlainAjaxController();		
+		//$controller->pageHeader();
+		//echo Filter::escapeHtml($value);
+		//exit;
 	}
 	
 	/**
 	 * Is called when saving fails, and return an HTML error.
 	 */
 	static public function fail() {
-		$controller = new WT_Controller_Ajax();
+		$controller = new AjaxController();
 		// Any 4xx code should work.  jeditable recommends 406
 		$controller->pageHeader();
 		header('HTTP/1.0 406 Not Acceptable');
